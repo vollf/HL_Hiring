@@ -3,47 +3,128 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>急招海报 · 深圳湾万象城 / 中国华润大厦</title>
+  <meta name="site-data" content="data/site.json" />
+  <title>急招海报</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500&family=Noto+Serif+SC:wght@700;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="poster.css" />
 </head>
 <body>
-  <article class="poster">
-    <header class="poster__head">
-      <p>深圳湾万象城</p>
-      <p>中国华润大厦</p>
-      <h1>急招中</h1>
-    </header>
+  <article class="poster" id="posterRoot" hidden>
+    <header class="poster__head" id="posterHead"></header>
 
-    <div class="poster__benefits">
-      <p>五险一金　|　商业保险　|　带薪年假</p>
-      <p>高温补贴　|　节日福利　|　员工活动</p>
-    </div>
+    <div class="poster__benefits" id="posterBenefits"></div>
 
     <div class="poster__jobs">
-      <h2>写字楼 &amp; 商业物业类</h2>
-      <div class="poster__cols">
-        <ul>
-          <li>秩序维护员</li>
-          <li>礼宾岗</li>
-          <li>环境管理员</li>
-        </ul>
-        <ul>
-          <li>租户管家</li>
-          <li>工程技工</li>
-          <li>案场客服</li>
-        </ul>
-      </div>
+      <h2 id="posterSectionTitle"></h2>
+      <div class="poster__cols" id="posterJobCols"></div>
     </div>
 
     <figure class="poster__qr">
-      <img src="assets/qrcode.png" width="150" height="150" alt="招聘网站二维码" />
-      <figcaption>扫码打开招聘站<br />1136756901-lgtm.github.io/zhaopin</figcaption>
+      <img id="posterQrImg" src="assets/qrcode.png" width="150" height="150" alt="招聘网站二维码" />
+      <figcaption id="posterQrCap"></figcaption>
     </figure>
 
-    <p class="poster__foot">如有疑问，可致电沟通：0755-86539304，期待您的投递！</p>
+    <p class="poster__foot" id="posterFoot"></p>
   </article>
+  <p id="posterError" style="padding:2rem;font-family:sans-serif;color:#666;" hidden></p>
+
+  <script>
+  (function () {
+    function escapeHtml(str) {
+      return String(str == null ? '' : str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function displayUrl(url) {
+      return String(url || '').replace(/^https?:\/\//, '').replace(/\/$/, '');
+    }
+
+    function resolveJobTitles(site, poster) {
+      if (poster.useJobsFromList !== false && Array.isArray(site.jobs) && site.jobs.length) {
+        var seen = {};
+        var list = [];
+        site.jobs.forEach(function (j) {
+          if (j && j.title && !seen[j.title]) {
+            seen[j.title] = true;
+            list.push(j.title);
+          }
+        });
+        if (list.length) return list;
+      }
+      return Array.isArray(poster.jobTitles) ? poster.jobTitles : [];
+    }
+
+    function render(site) {
+      var poster = site.poster || {};
+      var headlines = Array.isArray(poster.headlines) && poster.headlines.length
+        ? poster.headlines
+        : (site.locations || []);
+      var benefits = Array.isArray(poster.benefits) ? poster.benefits : [];
+      var titles = resolveJobTitles(site, poster);
+      var phone = site.phone || '';
+      var siteUrl = poster.siteUrl || 'https://vollf.github.io/HL_Hiring/';
+      var qrImg = poster.qrImage || 'assets/qrcode.png';
+
+      document.title = poster.pageTitle || ('急招海报 · ' + headlines.slice(0, 2).join(' / '));
+
+      var head = document.getElementById('posterHead');
+      head.innerHTML = headlines.map(function (h) {
+        return '<p>' + escapeHtml(h) + '</p>';
+      }).join('') + '<h1>' + escapeHtml(poster.headlineMain || '急招中') + '</h1>';
+
+      var mid = Math.ceil(benefits.length / 2) || 1;
+      var b1 = benefits.slice(0, mid);
+      var b2 = benefits.slice(mid);
+      document.getElementById('posterBenefits').innerHTML =
+        (b1.length ? '<p>' + b1.map(escapeHtml).join('　|　') + '</p>' : '') +
+        (b2.length ? '<p>' + b2.map(escapeHtml).join('　|　') + '</p>' : '');
+
+      document.getElementById('posterSectionTitle').textContent =
+        poster.sectionTitle || '在招岗位';
+
+      // 两列均分岗位名
+      var half = Math.ceil(titles.length / 2) || 1;
+      var cols = [titles.slice(0, half), titles.slice(half)];
+      document.getElementById('posterJobCols').innerHTML = cols.map(function (col) {
+        if (!col.length) return '';
+        return '<ul>' + col.map(function (t) {
+          return '<li>' + escapeHtml(t) + '</li>';
+        }).join('') + '</ul>';
+      }).join('');
+
+      var img = document.getElementById('posterQrImg');
+      img.src = qrImg;
+      document.getElementById('posterQrCap').innerHTML =
+        escapeHtml(poster.siteUrlLabel || '扫码打开招聘站') +
+        '<br />' + escapeHtml(displayUrl(siteUrl));
+
+      var prefix = poster.footPrefix != null ? poster.footPrefix : '如有疑问，可致电沟通：';
+      var suffix = poster.footSuffix != null ? poster.footSuffix : '，期待您的投递！';
+      document.getElementById('posterFoot').textContent = prefix + phone + suffix;
+
+      document.getElementById('posterRoot').hidden = false;
+    }
+
+    var meta = document.querySelector('meta[name="site-data"]');
+    var url = (meta && meta.content) || 'data/site.json';
+    fetch(url + '?t=' + Date.now())
+      .then(function (r) {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.json();
+      })
+      .then(render)
+      .catch(function (err) {
+        console.error(err);
+        var el = document.getElementById('posterError');
+        el.hidden = false;
+        el.textContent = '海报数据加载失败，请确认 data/site.json 可访问，并用本地 HTTP 服务打开。';
+      });
+  })();
+  </script>
 </body>
 </html>
