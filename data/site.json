@@ -340,5 +340,41 @@
       ],
       "hot": false
     }
-  ]
+  ],
+  "poster": {
+    "pageTitle": "急招海报 · 红岭万象汇",
+    "headlines": [
+      "红岭万象汇"
+    ],
+    "headlineMain": "急招中",
+    "benefits": [
+      "五险一金",
+      "商业保险",
+      "带薪年假",
+      "高温补贴",
+      "节日福利",
+      "员工活动"
+    ],
+    "sectionTitle": "写字楼 & 商业物业类",
+    "jobTitles": [
+      "秩序维护员",
+      "礼宾员",
+      "环境管理员",
+      "租户管家",
+      "服务台客服",
+      "案场客服",
+      "工程技工（机电）",
+      "工程技工（弱电/消防）",
+      "工程技工（电梯）",
+      "工程技工（二装）",
+      "工程技工（土建）",
+      "工程技工（暖通）"
+    ],
+    "useJobsFromList": true,
+    "siteUrl": "https://vollf.github.io/HL_Hiring/",
+    "siteUrlLabel": "扫码打开招聘站",
+    "qrImage": "assets/qrcode.png",
+    "footPrefix": "如有疑问，可致电沟通：",
+    "footSuffix": "，期待您的投递！"
+  }
 }
