@@ -18,7 +18,7 @@ body {
   color: #fff;
   font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
   background:
-    linear-gradient(180deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.28) 36%, rgba(0, 0, 0, 0.42) 70%, rgba(0, 0, 0, 0.78) 100%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.72) 0%, rgba(0, 0, 0, 0.25) 38%, rgba(0, 0, 0, 0.45) 72%, rgba(0, 0, 0, 0.82) 100%),
     url("assets/city-bg.jpg") center / cover no-repeat;
   box-sizing: border-box;
 }
