@@ -62,7 +62,7 @@
       "发送电子版简历，与招聘同事沟通岗位详情",
       "简历合适即安排面试，招满即止"
     ],
-    "qrImage": "https://aka.doubaocdn.com/s/7hiVuwWQVt",
+    "qrImage": "assets/wechat-qr.png",
     "qrTitle": "招聘微信",
     "qrTip": "扫码添加，备注应聘岗位",
     "modalBadge": "微信投递",
