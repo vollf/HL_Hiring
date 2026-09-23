@@ -1451,8 +1451,14 @@
             const qrImg = document.getElementById('applyQrImg');
             const modalQr = document.getElementById('modalQrImg');
             if (apply.qrImage) {
-                if (qrImg) { qrImg.src = apply.qrImage; qrImg.alt = '招聘微信二维码'; }
-                if (modalQr) { modalQr.src = apply.qrImage; modalQr.alt = '招聘微信二维码'; }
+                var qrSrc = apply.qrImage;
+                var dataMeta = document.querySelector('meta[name="site-data"]');
+                if (dataMeta && dataMeta.content && qrSrc.indexOf('://') < 0) {
+                    // data/site.json → assets/... ；../data/site.json → ../assets/...
+                    qrSrc = dataMeta.content.replace(/[^/]*$/, '').replace(/data\/?$/, '') + qrSrc.replace(/^\.\//, '');
+                }
+                if (qrImg) { qrImg.src = qrSrc; qrImg.alt = '招聘微信二维码'; }
+                if (modalQr) { modalQr.src = qrSrc; modalQr.alt = '招聘微信二维码'; }
             }
             const qrTitle = document.getElementById('applyQrTitle');
             if (qrTitle && apply.qrTitle) qrTitle.textContent = apply.qrTitle;
