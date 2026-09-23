@@ -176,13 +176,19 @@
         .hero {
             position: relative;
             color: #fff;
-            padding: calc(72px + var(--safe-top)) 22px 130px;
+            /* 尽量接近原图 16:9，抬高首屏少裁切 */
+            min-height: clamp(520px, 56.25vw, 720px);
+            padding: calc(56px + var(--safe-top)) 22px 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             background:
-                radial-gradient(120% 80% at 50% 0%, rgba(12, 77, 162, 0.28) 0%, transparent 58%),
-                linear-gradient(180deg, rgba(4, 22, 50, 0.72) 0%, rgba(6, 34, 72, 0.55) 48%, rgba(10, 46, 92, 0.42) 100%),
-                url("assets/hero-bg.jpg") center 40% / cover no-repeat;
+                radial-gradient(120% 80% at 50% 0%, rgba(12, 77, 162, 0.18) 0%, transparent 58%),
+                linear-gradient(180deg, rgba(4, 22, 50, 0.55) 0%, rgba(6, 34, 72, 0.38) 45%, rgba(10, 46, 92, 0.32) 100%),
+                url("assets/hero-bg.jpg") center center / cover no-repeat;
             text-align: center;
             overflow: hidden;
+            box-sizing: border-box;
         }
         .hero::after {
             content: "";
@@ -1051,7 +1057,8 @@
         @media (max-width: 768px) {
             .container { padding: 0 16px; }
             .hero {
-                padding: calc(52px + var(--safe-top)) 18px 110px;
+                min-height: clamp(460px, 72vw, 620px);
+                padding: calc(48px + var(--safe-top)) 18px 120px;
             }
             .hero-stats { gap: 8px; }
             .hero-stat {
@@ -1107,7 +1114,10 @@
             }
         }
         @media (max-width: 480px) {
-            .hero { padding: calc(44px + var(--safe-top)) 16px 100px; }
+            .hero {
+                min-height: clamp(420px, 88vw, 560px);
+                padding: calc(40px + var(--safe-top)) 16px 108px;
+            }
             .hero-sub { margin-bottom: 26px; }
             .hero-stats { margin-bottom: 26px; }
             .hero-stat {
