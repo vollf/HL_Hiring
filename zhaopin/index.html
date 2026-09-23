@@ -5,8 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="theme-color" content="#0c4da2">
     <meta name="site-data" content="../data/site.json">
-    <meta name="description" content="深圳湾商业一线岗位招聘，中国华润大厦、深圳湾万象城、华润金融大厦多岗位在招。">
-    <title>深圳湾商业一线岗位招聘 | 中国华润大厦·深圳湾万象城·华润金融大厦</title>
+    <meta name="description" content="红岭万象汇商业一线岗位招聘，深圳红岭万象汇多岗位在招，扫码添加招聘微信即可投递。">
+    <meta property="og:title" content="红岭万象汇商业一线岗位招聘 | 深圳红岭万象汇">
+    <meta property="og:description" content="红岭万象汇商业一线岗位招聘，深圳红岭万象汇多岗位在招，扫码添加招聘微信即可投递。">
+    <meta property="og:type" content="website">
+    <title>红岭万象汇商业一线岗位招聘 | 深圳红岭万象汇</title>
     <style>
         /* ===== 设计令牌 ===== */
         * {
@@ -1188,7 +1191,7 @@
         <div class="sticky-inner">
             <div class="sticky-brand">
                 <span class="dot"></span>
-                <span id="stickyBrandText">深圳湾招聘</span>
+                <span id="stickyBrandText">红岭万象汇招聘</span>
             </div>
             <div class="sticky-search">
                 <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
@@ -1202,7 +1205,7 @@
     <!-- ===== Hero 首屏（已删除图一标签） ===== -->
     <header class="hero" id="hero">
         <div class="hero-inner">
-            <h1 id="heroTitle">深圳湾商业<em>一线岗位</em>招聘</h1>
+            <h1 id="heroTitle">红岭万象汇商业<em>一线岗位</em>招聘</h1>
             <p class="hero-sub" id="heroSub">多岗位在招，扫码添加招聘微信，备注应聘岗位即可投递。</p>
             <div class="hero-stats">
                 <div class="hero-stat"><b id="statJobs">12</b><span>在招岗位</span></div>
@@ -1261,9 +1264,7 @@
                         <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
                         <select id="locationFilter" aria-label="按工作地点筛选">
                             <option value="">全部地点</option>
-                            <option value="中国华润大厦">中国华润大厦</option>
-                            <option value="深圳湾万象城">深圳湾万象城</option>
-                            <option value="华润金融大厦">华润金融大厦</option>
+                            <option value="深圳红岭万象汇">深圳红岭万象汇</option>
                         </select>
                     </div>
                     <button class="reset-btn" id="resetBtn">
@@ -1373,6 +1374,17 @@
 
         function applySiteCopy(site) {
             document.title = site.siteTitle || document.title;
+            var desc = site.siteDescription || '';
+            if (desc) {
+                var metaDesc = document.querySelector('meta[name="description"]');
+                if (metaDesc) metaDesc.setAttribute('content', desc);
+                var ogDesc = document.querySelector('meta[property="og:description"]');
+                if (ogDesc) ogDesc.setAttribute('content', desc);
+            }
+            if (site.siteTitle) {
+                var ogTitle = document.querySelector('meta[property="og:title"]');
+                if (ogTitle) ogTitle.setAttribute('content', site.siteTitle);
+            }
             const brand = document.getElementById('stickyBrandText');
             if (brand && site.stickyBrand) brand.textContent = site.stickyBrand;
             const heroTitle = document.getElementById('heroTitle');
